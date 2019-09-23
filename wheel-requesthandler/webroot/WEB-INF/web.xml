@@ -1,0 +1,30 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+	<display-name>Archetype Created Web Application</display-name>
+	
+	<servlet>
+		<servlet-name>test</servlet-name>
+		<servlet-class>me.ooi.wheel.requesthandler.TestServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>test</servlet-name>
+		<url-pattern>/test</url-pattern>
+	</servlet-mapping>
+	
+	<filter>
+		<filter-name>dispatchFilter</filter-name>
+		<filter-class>me.ooi.wheel.requesthandler.DispatchFilter</filter-class>
+		<init-param>
+			<param-name>scanPackage</param-name>
+			<param-value>me.ooi.wheel.requesthandler</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>dispatchFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+</web-app>
