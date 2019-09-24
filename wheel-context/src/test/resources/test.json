@@ -1,0 +1,31 @@
+{
+	"beans":[
+		{
+			"name": "d1",
+			"class": "me.ooi.wheel.context.Department",
+			"scope": "singleton",
+			"properties": {
+				"name": "d1111"
+			}
+		},
+		{
+			"name": "user1",
+			"class": "me.ooi.wheel.context.User",
+			"scope": "singleton",
+			"properties": {
+				"name": "aaa",
+				"label": ["lable1", "lable2"],
+				"attr": {
+					"a1": "sadfasfd",
+					"a2": "ffffffffffff"
+				},
+				"department": "&d1"
+			}
+		},
+		{
+			"class": "me.ooi.wheel.context.User",
+			"scope": "prototype"
+		}
+	]
+}
+
