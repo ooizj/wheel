@@ -22,6 +22,49 @@ public class TypeHandlerRegistry {
 	
 	private TypeHandlerRegistry(){
 		
+		//INT[(M)] [UNSIGNED] [ZEROFILL]
+		//A normal-size integer. The signed range is -2147483648 to 2147483647. The unsigned range is 0 to 4294967295.
+		register(Integer.class, Types.INTEGER, new IntegerTypeHandler(Types.INTEGER)) ; 
+		register(Integer.TYPE, Types.INTEGER, new IntegerTypeHandler(Types.INTEGER)) ; 
+		register(Long.class, Types.INTEGER, new LongTypeHandler(Types.INTEGER)) ; 
+		register(Long.TYPE, Types.INTEGER, new LongTypeHandler(Types.INTEGER)) ; 
+		register(BigDecimal.class, Types.INTEGER, new BigDecimalTypeHandler(Types.INTEGER)) ; 
+		register(BigInteger.class, Types.INTEGER, new BigIntegerTypeHandler(Types.INTEGER)) ; 
+		
+		//SMALLINT[(M)] [UNSIGNED] [ZEROFILL]
+		//A small integer. The signed range is -32768 to 32767. The unsigned range is 0 to 65535.
+		register(Short.class, Types.SMALLINT, new ShortTypeHandler()) ; 
+		register(Short.TYPE, Types.SMALLINT, new ShortTypeHandler()) ; 
+		register(Integer.class, Types.SMALLINT, new IntegerTypeHandler(Types.SMALLINT)) ; 
+		register(Integer.TYPE, Types.SMALLINT, new IntegerTypeHandler(Types.SMALLINT)) ; 
+		register(Long.class, Types.SMALLINT, new LongTypeHandler(Types.SMALLINT)) ; 
+		register(Long.TYPE, Types.SMALLINT, new LongTypeHandler(Types.SMALLINT)) ; 
+		register(BigDecimal.class, Types.SMALLINT, new BigDecimalTypeHandler(Types.SMALLINT)) ; 
+		register(BigInteger.class, Types.SMALLINT, new BigIntegerTypeHandler(Types.SMALLINT)) ; 
+		
+//		BIGINT[(M)] [UNSIGNED] [ZEROFILL]
+//		A large integer. The signed range is -9223372036854775808 to 9223372036854775807. The unsigned range is 0 to 18446744073709551615.
+		register(Long.class, Types.BIGINT, new LongTypeHandler(Types.BIGINT)) ; 
+		register(Long.TYPE, Types.BIGINT, new LongTypeHandler(Types.BIGINT)) ; 
+		register(BigDecimal.class, Types.BIGINT, new BigDecimalTypeHandler(Types.BIGINT)) ; 
+		register(BigInteger.class, Types.BIGINT, new BigIntegerTypeHandler(Types.BIGINT)) ; 
+		
+		
+		register(Double.class, Types.DOUBLE, new DoubleTypeHandler()) ; 
+		register(Double.TYPE, Types.DOUBLE, new DoubleTypeHandler()) ; 
+		register(Float.class, Types.FLOAT, new FloatTypeHandler()) ; 
+		register(Float.TYPE, Types.FLOAT, new FloatTypeHandler()) ; 
+		register(Float.class, Types.REAL, new FloatTypeHandler()) ; 
+		register(Float.TYPE, Types.REAL, new FloatTypeHandler()) ; 
+		
+		
+		register(BigDecimal.class, Types.NUMERIC, new BigDecimalTypeHandler(Types.NUMERIC)) ; 
+		register(BigDecimal.class, Types.DECIMAL, new BigDecimalTypeHandler(Types.DECIMAL)) ; 
+		register(BigInteger.class, Types.NUMERIC, new BigIntegerTypeHandler(Types.NUMERIC)) ; 
+		
+		
+		
+		
 		register(java.util.Date.class, Types.DATE, new DateTypeHandler(Types.DATE)) ; 
 		register(java.util.Date.class, Types.TIMESTAMP, new DateTypeHandler(Types.TIMESTAMP)) ; 
 		register(java.util.Date.class, Types.TIME, new DateTypeHandler(Types.TIME)) ; 
@@ -54,21 +97,7 @@ public class TypeHandlerRegistry {
 		
 		register(byte[].class, Types.BINARY, new BytesTypeHandler()) ; 
 		
-		register(Double.class, Types.DOUBLE, new DoubleTypeHandler()) ; 
-		register(Double.TYPE, Types.DOUBLE, new DoubleTypeHandler()) ; 
-		register(Float.class, Types.FLOAT, new FloatTypeHandler()) ; 
-		register(Float.TYPE, Types.FLOAT, new FloatTypeHandler()) ; 
-		register(Float.class, Types.REAL, new FloatTypeHandler()) ; 
-		register(Float.TYPE, Types.REAL, new FloatTypeHandler()) ; 
-		register(Integer.class, Types.INTEGER, new IntegerTypeHandler()) ; 
-		register(Integer.TYPE, Types.INTEGER, new IntegerTypeHandler()) ; 
-		register(Long.class, Types.BIGINT, new LongTypeHandler()) ; 
-		register(Long.TYPE, Types.BIGINT, new LongTypeHandler()) ; 
-		register(Short.class, Types.SMALLINT, new ShortTypeHandler()) ; 
-		register(Short.TYPE, Types.SMALLINT, new ShortTypeHandler()) ; 
-		register(BigDecimal.class, Types.NUMERIC, new BigDecimalTypeHandler()) ; 
-		register(BigDecimal.class, Types.DECIMAL, new BigDecimalTypeHandler()) ; 
-		register(BigInteger.class, Types.NUMERIC, new BigIntegerTypeHandler()) ; 
+		
 		
 	}
 	
