@@ -31,6 +31,9 @@ public class BigIntegerTypeHandler implements TypeHandler<BigInteger> {
 		}else if( sqlType == Types.BIGINT ){
 			Long val = rs.getLong(columnIndex) ;
 			return val == null ? null : BigInteger.valueOf(val) ; 
+		}else if( sqlType == Types.TINYINT ){
+			Byte val = rs.getByte(columnIndex) ; 
+			return val == null ? null : BigInteger.valueOf(val) ; 
 		}
 		
 		return null ; 

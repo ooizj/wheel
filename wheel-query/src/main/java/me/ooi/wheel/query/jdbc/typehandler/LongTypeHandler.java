@@ -25,6 +25,9 @@ public class LongTypeHandler implements TypeHandler<Long> {
 		}else if( sqlType == Types.SMALLINT ){
 			Short val = rs.getShort(columnIndex) ; 
 			return val == null ? null : val.longValue(); 
+		}else if( sqlType == Types.TINYINT ){
+			Byte val = rs.getByte(columnIndex) ; 
+			return val == null ? null : val.longValue() ; 
 		}
 		
 		return null ; 

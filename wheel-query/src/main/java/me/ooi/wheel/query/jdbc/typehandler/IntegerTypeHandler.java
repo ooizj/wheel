@@ -22,6 +22,9 @@ public class IntegerTypeHandler implements TypeHandler<Integer> {
 		}else if( sqlType == Types.SMALLINT ){
 			Short val = rs.getShort(columnIndex) ; 
 			return val == null ? null : val.intValue() ; 
+		}else if( sqlType == Types.TINYINT ){
+			Byte val = rs.getByte(columnIndex) ; 
+			return val == null ? null : val.intValue() ; 
 		}
 		
 		return null ;

@@ -18,7 +18,7 @@ public class BigDecimalTypeHandler implements TypeHandler<BigDecimal> {
 
 	@Override
 	public BigDecimal getColumnValue(ResultSet rs, int columnIndex) throws SQLException {
-		if( sqlType == Types.DECIMAL ){
+		if( sqlType == Types.DECIMAL || sqlType == Types.NUMERIC ){
 			return rs.getBigDecimal(columnIndex) ;
 		}else if( sqlType == Types.INTEGER ){
 			Integer val = rs.getInt(columnIndex) ; 
@@ -29,6 +29,9 @@ public class BigDecimalTypeHandler implements TypeHandler<BigDecimal> {
 		}else if( sqlType == Types.BIGINT ){
 			Long val = rs.getLong(columnIndex) ;
 			return val == null ? null : new BigDecimal(val) ;  
+		}else if( sqlType == Types.TINYINT ){
+			Byte val = rs.getByte(columnIndex) ; 
+			return val == null ? null : new BigDecimal(val) ; 
 		}
 		
 		return null ; 

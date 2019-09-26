@@ -72,6 +72,10 @@ public class TypeHandlerTest {
 		  `testBit_` bit(10) DEFAULT NULL,
 		  `testEnum_` enum('A','B') DEFAULT NULL,
 		  `testSet_` set('A','B') DEFAULT NULL,
+		  
+		  `UNSIGNED_testSmallInt_` smallint(11) UNSIGNED,
+		  testBit2_ bit(1) DEFAULT NULL,
+		  
 		  PRIMARY KEY (`id`)
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -104,7 +108,10 @@ public class TypeHandlerTest {
 		query.setConnectionHolder(connectionHolder);
 		connectionHolder.setConnection(conn); 
 		
-		int updatedRowCount = query.update("alter table mysqlalltype add column(`UNSIGNED_testSmallInt_` smallint(11) UNSIGNED )") ; 
+//		int updatedRowCount = query.update("alter table mysqlalltype add column(`UNSIGNED_testSmallInt_` smallint(11) UNSIGNED )") ;
+//		int updatedRowCount = query.update("alter table mysqlalltype add column(testBit2_ bit(1) DEFAULT NULL)") ;
+		int updatedRowCount = query.update("alter table mysqlalltype add column(testNUMERIC2_ NUMERIC)") ;
+		
 		System.out.println(updatedRowCount);
 	}
 	
@@ -191,11 +198,6 @@ public class TypeHandlerTest {
 		int updatedRowCount = query.update("update mysqlalltype set testBigint_ = ? where id = 1", 9223372036854775807L) ; 
 		System.out.println(updatedRowCount);
 		
-//		List<Integer> list2 = query.select("select testBigint_ from mysqlalltype ", Integer.class) ; 
-//		System.out.println("Integer\t"+list2);
-//		List<Integer> list1 = query.select("select testBigint_ from mysqlalltype ", int.class) ; 
-//		System.out.println("int\t"+list1);
-		
 		List<Long> list3 = query.select("select testBigint_ from mysqlalltype ", Long.class) ; 
 		System.out.println("Long\t"+list3);
 		List<Long> list4 = query.select("select testBigint_ from mysqlalltype ", long.class) ; 
@@ -206,6 +208,145 @@ public class TypeHandlerTest {
 		
 		List<BigInteger> list6 = query.select("select testBigint_ from mysqlalltype ", BigInteger.class) ; 
 		System.out.println("BigInteger\t"+list6);
+	}
+	
+	@Test
+	public void testTinyInt1() throws SQLException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testTinyInt_ = ? where id = 1", 127) ; 
+		System.out.println(updatedRowCount);
+		
+		List<Byte> list9 = query.select("select testTinyInt_ from mysqlalltype ", Byte.class) ; 
+		System.out.println("Byte\t"+list9);
+		List<Byte> list10 = query.select("select testTinyInt_ from mysqlalltype ", byte.class) ; 
+		System.out.println("byte\t"+list10);
+		
+		List<Short> list7 = query.select("select testTinyInt_ from mysqlalltype ", Short.class) ; 
+		System.out.println("Short\t"+list7);
+		List<Short> list8 = query.select("select testTinyInt_ from mysqlalltype ", short.class) ; 
+		System.out.println("short\t"+list8);
+		
+		List<Integer> list2 = query.select("select testTinyInt_ from mysqlalltype ", Integer.class) ; 
+		System.out.println("Integer\t"+list2);
+		List<Integer> list1 = query.select("select testTinyInt_ from mysqlalltype ", int.class) ; 
+		System.out.println("int\t"+list1);
+		
+		List<Long> list3 = query.select("select testTinyInt_ from mysqlalltype ", Long.class) ; 
+		System.out.println("Long\t"+list3);
+		List<Long> list4 = query.select("select testTinyInt_ from mysqlalltype ", long.class) ; 
+		System.out.println("long\t"+list4);
+		
+		List<BigDecimal> list5 = query.select("select testTinyInt_ from mysqlalltype ", BigDecimal.class) ; 
+		System.out.println("BigDecimal\t"+list5);
+		
+		List<BigInteger> list6 = query.select("select testTinyInt_ from mysqlalltype ", BigInteger.class) ; 
+		System.out.println("BigInteger\t"+list6);
+	}
+	
+	@Test
+	public void testTinyInt2() throws SQLException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testTinyInt_ = ? where id = 1", 2) ; 
+		System.out.println(updatedRowCount);
+		
+		List<Boolean> list11 = query.select("select testTinyInt_ from mysqlalltype ", Boolean.class) ; 
+		System.out.println("Boolean\t"+list11.get(0).booleanValue());
+	}
+	
+	
+	@Test
+	public void testBit2() throws SQLException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testBit2_ = ? where id = 1", 5) ; 
+		System.out.println(updatedRowCount);
+		
+		List<Boolean> list11 = query.select("select testBit2_ from mysqlalltype ", Boolean.class) ; 
+		System.out.println("Boolean\t"+list11.get(0).booleanValue());
+		
+	}
+	
+	@Test
+	public void testBit1() throws SQLException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testBit_ = ? where id = 1", 1) ; 
+		System.out.println(updatedRowCount);
+		
+		List<Boolean> list11 = query.select("select testBit_ from mysqlalltype ", Boolean.class) ; 
+		System.out.println("Boolean\t"+list11.get(0).booleanValue());
+		
+	}
+	
+	@Test
+	public void testBigDecimal1() throws SQLException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testDecimal = ? where id = 1", new BigDecimal(15.2)) ; 
+		System.out.println(updatedRowCount);
+		
+		List<BigDecimal> list1 = query.select("select testDecimal from mysqlalltype ", BigDecimal.class) ; 
+		System.out.println("BigDecimal\t"+list1);
+		
+	}
+	
+	@Test
+	public void testF1oat1() throws SQLException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testFloat = ? where id = 1", 15.2F) ; 
+		System.out.println(updatedRowCount);
+		
+		List<Float> list1 = query.select("select testFloat from mysqlalltype ", Float.class) ; 
+		System.out.println("Float\t"+list1);
+	}
+	
+	
+	@Test
+	public void testDouble1() throws SQLException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testDouble = ? where id = 1", 15.2D) ; 
+		System.out.println(updatedRowCount);
+		
+		List<Double> list1 = query.select("select testDouble from mysqlalltype ", Double.class) ; 
+		System.out.println("Double\t"+list1);
+	}
+	
+	
+	private void printBytes(byte[] bytes){
+		if( bytes == null ){
+			System.out.println("bytes is null ");
+		}else {
+			String str = "" ; 
+			for (byte b : bytes) {
+				str += b + "\t" ; 
+			}
+			System.out.println("bytes is "+str);
+		}
 	}
 	
 }
