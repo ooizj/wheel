@@ -21,43 +21,9 @@ public class TypeHandlerRegistry {
 	private Map<Type, Map<Integer, TypeHandler<?>>> typeColumnHandlersMap = new HashMap<Type, Map<Integer, TypeHandler<?>>>() ; 
 	
 	private TypeHandlerRegistry(){
-		
 		registerNumeric();
-		
-		
-		register(java.util.Date.class, Types.DATE, new DateTypeHandler(Types.DATE)) ; 
-		register(java.util.Date.class, Types.TIMESTAMP, new DateTypeHandler(Types.TIMESTAMP)) ; 
-		register(java.util.Date.class, Types.TIME, new DateTypeHandler(Types.TIME)) ; 
-		
-		register(java.sql.Date.class, Types.DATE, new SqlDateTypeHandler(Types.DATE)) ; 
-		register(java.sql.Date.class, Types.TIMESTAMP, new SqlDateTypeHandler(Types.TIMESTAMP)) ; 
-		register(java.sql.Date.class, Types.TIME, new SqlDateTypeHandler(Types.TIME)) ; 
-		
-		register(java.sql.Timestamp.class, Types.DATE, new TimestampTypeHandler(Types.DATE)) ; 
-		register(java.sql.Timestamp.class, Types.TIMESTAMP, new TimestampTypeHandler(Types.TIMESTAMP)) ; 
-		register(java.sql.Timestamp.class, Types.TIME, new TimestampTypeHandler(Types.TIME)) ; 
-		
-		register(java.sql.Time.class, Types.DATE, new TimeTypeHandler(Types.DATE)) ; 
-		register(java.sql.Time.class, Types.TIMESTAMP, new TimeTypeHandler(Types.TIMESTAMP)) ; 
-		register(java.sql.Time.class, Types.TIME, new TimeTypeHandler(Types.TIME)) ; 
-		
-		register(String.class, Types.VARCHAR, new StringTypeHandler()) ; 
-		register(String.class, Types.CHAR, new StringTypeHandler()) ; 
-		register(String.class, Types.LONGVARCHAR, new StringTypeHandler()) ; 
-		
-		
-		
-		register(Blob.class, Types.BLOB, new BlobTypeHandler()) ; 
-		
-		register(Array.class, Types.ARRAY, new ArrayTypeHandler()) ; 
-		register(Byte.class, Types.BINARY, new ByteTypeHandler()) ; 
-		register(Byte.TYPE, Types.BINARY, new ByteTypeHandler()) ; 
-		
-		
-		register(byte[].class, Types.BINARY, new BytesTypeHandler()) ; 
-		
-		
-		
+		registerDate();
+		registerString();
 	}
 	
 	private void registerNumeric(){
@@ -128,6 +94,53 @@ public class TypeHandlerRegistry {
 		//A normal-size (double-precision) floating-point number. Permissible values are -1.7976931348623157E+308 to -2.2250738585072014E-308, 0, and 2.2250738585072014E-308 to 1.7976931348623157E+308. These are the theoretical limits, based on the IEEE standard. The actual range might be slightly smaller depending on your hardware or operating system.
 		register(Double.class, Types.DOUBLE, new DoubleTypeHandler(Types.DOUBLE)) ; 
 		register(Double.TYPE, Types.DOUBLE, new DoubleTypeHandler(Types.DOUBLE)) ; 
+	}
+	
+	private void registerDate(){
+		//DATE
+		//A date. The supported range is '1000-01-01' to '9999-12-31'. MySQL displays DATE values in 'YYYY-MM-DD' format, but permits assignment of values to DATE columns using either strings or numbers.
+		register(java.util.Date.class, Types.DATE, new DateTypeHandler(Types.DATE)) ; 
+		register(java.sql.Date.class, Types.DATE, new SqlDateTypeHandler(Types.DATE)) ; 
+		register(java.sql.Timestamp.class, Types.DATE, new TimestampTypeHandler(Types.DATE)) ; 
+		register(java.sql.Time.class, Types.DATE, new TimeTypeHandler(Types.DATE)) ; 
+		
+		//TIMESTAMP[(fsp)]
+		//A timestamp. The range is '1970-01-01 00:00:01.000000' UTC to '2038-01-19 03:14:07.999999' UTC. TIMESTAMP values are stored as the number of seconds since the epoch ('1970-01-01 00:00:00' UTC). A TIMESTAMP cannot represent the value '1970-01-01 00:00:00' because that is equivalent to 0 seconds from the epoch and the value 0 is reserved for representing '0000-00-00 00:00:00', the “zero” TIMESTAMP value.
+		register(java.util.Date.class, Types.TIMESTAMP, new DateTypeHandler(Types.TIMESTAMP)) ; 
+		register(java.sql.Date.class, Types.TIMESTAMP, new SqlDateTypeHandler(Types.TIMESTAMP)) ; 
+		register(java.sql.Timestamp.class, Types.TIMESTAMP, new TimestampTypeHandler(Types.TIMESTAMP)) ; 
+		register(java.sql.Time.class, Types.TIMESTAMP, new TimeTypeHandler(Types.TIMESTAMP)) ; 
+		
+		//TIME[(fsp)]
+		//A time. The range is '-838:59:59.000000' to '838:59:59.000000'. MySQL displays TIME values in 'hh:mm:ss[.fraction]' format, but permits assignment of values to TIME columns using either strings or numbers.
+		register(java.util.Date.class, Types.TIME, new DateTypeHandler(Types.TIME)) ; 
+		register(java.sql.Date.class, Types.TIME, new SqlDateTypeHandler(Types.TIME)) ; 
+		register(java.sql.Timestamp.class, Types.TIME, new TimestampTypeHandler(Types.TIME)) ; 
+		register(java.sql.Time.class, Types.TIME, new TimeTypeHandler(Types.TIME)) ; 
+	}
+	
+	private void registerString(){
+		
+		//[NATIONAL] CHAR[(M)] [CHARACTER SET charset_name] [COLLATE collation_name]
+		//A fixed-length string that is always right-padded with spaces to the specified length when stored. M represents the column length in characters. The range of M is 0 to 255. If M is omitted, the length is 1.
+		register(String.class, Types.CHAR, new StringTypeHandler(Types.CHAR)) ; 
+		
+		//[NATIONAL] VARCHAR(M) [CHARACTER SET charset_name] [COLLATE collation_name]
+		//A variable-length string. M represents the maximum column length in characters. The range of M is 0 to 65,535. The effective maximum length of a VARCHAR is subject to the maximum row size (65,535 bytes, which is shared among all columns) and the character set used. For example, utf8 characters can require up to three bytes per character, so a VARCHAR column that uses the utf8 character set can be declared to be a maximum of 21,844 characters. 
+		register(String.class, Types.VARCHAR, new StringTypeHandler(Types.VARCHAR)) ; 
+		
+		//BINARY[(M)]
+		//The BINARY type is similar to the CHAR type, but stores binary byte strings rather than nonbinary character strings. An optional length M represents the column length in bytes. If omitted, M defaults to 1.
+		register(Byte.class, Types.BINARY, new ByteTypeHandler()) ; 
+		register(Byte.TYPE, Types.BINARY, new ByteTypeHandler()) ; 
+		register(String.class, Types.BINARY, new StringTypeHandler(Types.BINARY)) ; 
+		
+		
+		
+//		register(String.class, Types.LONGVARCHAR, new StringTypeHandler()) ; 
+		register(Blob.class, Types.BLOB, new BlobTypeHandler()) ; 
+		register(Array.class, Types.ARRAY, new ArrayTypeHandler()) ; 
+		register(byte[].class, Types.BINARY, new BytesTypeHandler()) ; 
 	}
 	
 	public boolean isPrimitiveType(Type type){

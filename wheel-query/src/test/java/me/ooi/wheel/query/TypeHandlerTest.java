@@ -5,6 +5,9 @@ import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.After;
@@ -336,6 +339,165 @@ public class TypeHandlerTest {
 		System.out.println("Double\t"+list1);
 	}
 	
+	@Test
+	public void testDate1() throws SQLException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testDate = ? where id = 1", getTestErrorDate()) ; 
+		System.out.println(updatedRowCount);
+		
+		List<Date> list1 = query.select("select testDate from mysqlalltype ", Date.class) ; 
+		printDate(list1.get(0));
+		
+		List<java.sql.Date> list2 = query.select("select testDate from mysqlalltype ", java.sql.Date.class) ; 
+		printDate(list2.get(0));
+		
+		List<java.sql.Timestamp> list3 = query.select("select testDate from mysqlalltype ", java.sql.Timestamp.class) ; 
+		printDate(list3.get(0));
+		
+		List<java.sql.Time> list4 = query.select("select testDate from mysqlalltype ", java.sql.Time.class) ; 
+		printDate(list4.get(0));
+	}
+	
+	@Test
+	public void testDatetime1() throws SQLException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testDatetime = ? where id = 1", new Date()) ; 
+		System.out.println(updatedRowCount);
+		
+		List<Date> list1 = query.select("select testDatetime from mysqlalltype ", Date.class) ; 
+		printDate(list1.get(0));
+		
+		List<java.sql.Date> list2 = query.select("select testDatetime from mysqlalltype ", java.sql.Date.class) ; 
+		printDate(list2.get(0));
+		
+		List<java.sql.Timestamp> list3 = query.select("select testDatetime from mysqlalltype ", java.sql.Timestamp.class) ; 
+		printDate(list3.get(0));
+		
+		List<java.sql.Time> list4 = query.select("select testDatetime from mysqlalltype ", java.sql.Time.class) ; 
+		printDate(list4.get(0));
+	}
+	
+	
+	@Test
+	public void testTimestamp1() throws SQLException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testTimestamp_ = ? where id = 1", new Date()) ; 
+		System.out.println(updatedRowCount);
+		
+		List<Date> list1 = query.select("select testTimestamp_ from mysqlalltype ", Date.class) ; 
+		printDate(list1.get(0));
+		
+		List<java.sql.Date> list2 = query.select("select testTimestamp_ from mysqlalltype ", java.sql.Date.class) ; 
+		printDate(list2.get(0));
+		
+		List<java.sql.Timestamp> list3 = query.select("select testTimestamp_ from mysqlalltype ", java.sql.Timestamp.class) ; 
+		printDate(list3.get(0));
+		
+		List<java.sql.Time> list4 = query.select("select testTimestamp_ from mysqlalltype ", java.sql.Time.class) ; 
+		printDate(list4.get(0));
+	}
+	
+	@Test
+	public void testTime1() throws SQLException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testTime = ? where id = 1", new Date()) ; 
+		System.out.println(updatedRowCount);
+		
+		List<Date> list1 = query.select("select testTime from mysqlalltype ", Date.class) ; 
+		printDate(list1.get(0));
+		
+		List<java.sql.Date> list2 = query.select("select testTime from mysqlalltype ", java.sql.Date.class) ; 
+		printDate(list2.get(0));
+		
+		List<java.sql.Timestamp> list3 = query.select("select testTime from mysqlalltype ", java.sql.Timestamp.class) ; 
+		printDate(list3.get(0));
+		
+		List<java.sql.Time> list4 = query.select("select testTime from mysqlalltype ", java.sql.Time.class) ; 
+		printDate(list4.get(0));
+	}
+	
+	@Test
+	public void testYear1() throws SQLException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testYear_ = ? where id = 1", 2019) ; 
+		System.out.println(updatedRowCount);
+		
+		List<Date> list1 = query.select("select testYear_ from mysqlalltype ", Date.class) ; 
+		printDate(list1.get(0));
+		
+		List<java.sql.Date> list2 = query.select("select testYear_ from mysqlalltype ", java.sql.Date.class) ; 
+		printDate(list2.get(0));
+		
+		List<java.sql.Timestamp> list3 = query.select("select testYear_ from mysqlalltype ", java.sql.Timestamp.class) ; 
+		printDate(list3.get(0));
+		
+		List<java.sql.Time> list4 = query.select("select testYear_ from mysqlalltype ", java.sql.Time.class) ; 
+		printDate(list4.get(0));
+	}
+	
+	@Test
+	public void testChar1() throws SQLException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testChar_ = ? where id = 1", "123方法") ; 
+		System.out.println(updatedRowCount);
+		
+		List<String> list1 = query.select("select testChar_ from mysqlalltype ", String.class) ; 
+		System.out.println("String\t"+list1);
+	}
+	
+	@Test
+	public void testVarchar1() throws SQLException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testVarchar_ = ? where id = 1", "123方法1") ; 
+		System.out.println(updatedRowCount);
+		
+		List<String> list1 = query.select("select testVarchar_ from mysqlalltype ", String.class) ; 
+		System.out.println("String\t"+list1);
+	}
+	
+	@Test
+	public void testBinary1() throws SQLException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testBinary = ? where id = 1", "123方法2") ; 
+		System.out.println(updatedRowCount);
+		
+		List<String> list1 = query.select("select testBinary from mysqlalltype ", String.class) ; 
+		System.out.println("String\t"+list1);
+	}
+	
+	
 	
 	private void printBytes(byte[] bytes){
 		if( bytes == null ){
@@ -347,6 +509,34 @@ public class TypeHandlerTest {
 			}
 			System.out.println("bytes is "+str);
 		}
+	}
+	
+	private Date getDate(String dateStr){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss") ;
+		try {
+			return sdf.parse(dateStr) ;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null ; 
+		} 
+	}
+	
+	private Date getTestErrorDate(){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss") ;
+		try {
+			return sdf.parse("1000-01-01") ;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null ; 
+		} 
+	}
+	
+	private void printDate(Date date){
+		if( date == null ){
+			System.out.println("date is null");
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss") ;
+		System.out.println("date is "+sdf.format(date));
 	}
 	
 }
