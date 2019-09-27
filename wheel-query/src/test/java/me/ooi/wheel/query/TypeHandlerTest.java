@@ -1,7 +1,10 @@
 package me.ooi.wheel.query;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -10,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -490,13 +494,83 @@ public class TypeHandlerTest {
 		query.setConnectionHolder(connectionHolder);
 		connectionHolder.setConnection(conn); 
 		
-		int updatedRowCount = query.update("update mysqlalltype set testBinary = ? where id = 1", "123方法2") ; 
+		int updatedRowCount = query.update("update mysqlalltype set testBinary = ? where id = 1", "123方法2".getBytes()) ; 
 		System.out.println(updatedRowCount);
 		
-		List<String> list1 = query.select("select testBinary from mysqlalltype ", String.class) ; 
-		System.out.println("String\t"+list1);
+		List<byte[]> list1 = query.select("select testBinary from mysqlalltype ", byte[].class) ; 
+		printBytes(list1.get(0));
+		System.out.println(new String(list1.get(0)));
+		
+		List<String> list2 = query.select("select testBinary from mysqlalltype ", String.class) ; 
+		System.out.println("String\t"+list2);
 	}
 	
+	@Test
+	public void testVarBinary1() throws SQLException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testVarBinary_ = ? where id = 1", "123方法2".getBytes()) ; 
+		System.out.println(updatedRowCount);
+		
+		List<byte[]> list1 = query.select("select testVarBinary_ from mysqlalltype ", byte[].class) ; 
+		printBytes(list1.get(0));
+		
+		List<String> list2 = query.select("select testVarBinary_ from mysqlalltype ", String.class) ; 
+		System.out.println("String\t"+list2);
+		
+	}
+	
+	@Test
+	public void testTinyBlob1() throws SQLException, IOException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testTinyBlob = ? where id = 1", "123方法2".getBytes()) ; 
+		System.out.println(updatedRowCount);
+		
+		List<byte[]> list1 = query.select("select testTinyBlob from mysqlalltype ", byte[].class) ; 
+		printBytes(list1.get(0));
+		
+		List<Blob> list2 = query.select("select testTinyBlob from mysqlalltype ", Blob.class) ; 
+		System.out.println("Blob\t"+list2);
+		InputStream is = list2.get(0).getBinaryStream() ; 
+		System.out.println(IOUtils.toString(is, "utf-8"));
+		if( is != null ){
+			is.close();
+		}
+		list2.get(0).free();
+	}
+	
+	@Test
+	public void testBlob1() throws SQLException, IOException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testBlob_ = ? where id = 1", "123方法2".getBytes()) ; 
+		System.out.println(updatedRowCount);
+		
+		List<byte[]> list1 = query.select("select testBlob_ from mysqlalltype ", byte[].class) ; 
+		printBytes(list1.get(0));
+		
+		List<String> list3 = query.select("select testBlob_ from mysqlalltype ", String.class) ; 
+		System.out.println("String\t"+list3);
+		
+		List<Blob> list2 = query.select("select testBlob_ from mysqlalltype ", Blob.class) ; 
+		System.out.println("Blob\t"+list2);
+		InputStream is = list2.get(0).getBinaryStream() ; 
+		System.out.println(IOUtils.toString(is, "utf-8"));
+		if( is != null ){
+			is.close();
+		}
+		list2.get(0).free();
+	}
 	
 	
 	private void printBytes(byte[] bytes){

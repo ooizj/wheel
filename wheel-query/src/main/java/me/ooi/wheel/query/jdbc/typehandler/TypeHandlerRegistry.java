@@ -131,14 +131,28 @@ public class TypeHandlerRegistry {
 		
 		//BINARY[(M)]
 		//The BINARY type is similar to the CHAR type, but stores binary byte strings rather than nonbinary character strings. An optional length M represents the column length in bytes. If omitted, M defaults to 1.
-		register(Byte.class, Types.BINARY, new ByteTypeHandler()) ; 
-		register(Byte.TYPE, Types.BINARY, new ByteTypeHandler()) ; 
-		register(String.class, Types.BINARY, new StringTypeHandler(Types.BINARY)) ; 
+		register(byte[].class, Types.BINARY, new BytesTypeHandler()) ; 
+		
+		//VARBINARY(M)
+		//The VARBINARY type is similar to the VARCHAR type, but stores binary byte strings rather than nonbinary character strings. M represents the maximum column length in bytes.
+		register(byte[].class, Types.VARBINARY, new BytesTypeHandler()) ; 
+		register(String.class, Types.VARBINARY, new StringTypeHandler(Types.VARBINARY)) ; 
+		register(Blob.class, Types.VARBINARY, new BlobTypeHandler()) ; 
+		register(byte[].class, Types.LONGVARBINARY, new BytesTypeHandler()) ; 
+		register(String.class, Types.LONGVARBINARY, new StringTypeHandler(Types.LONGVARBINARY)) ; 
+		register(Blob.class, Types.LONGVARBINARY, new BlobTypeHandler()) ; 
+//		InputStreamTypeHandler
+		
+//		TINYBLOB
+//		A BLOB column with a maximum length of 255 (28 − 1) bytes. Each TINYBLOB value is stored using a 1-byte length prefix that indicates the number of bytes in the value.
+		register(Blob.class, Types.BLOB, new BlobTypeHandler()) ; 
+		register(byte[].class, Types.BLOB, new BytesTypeHandler()) ; 
+//		
 		
 		
 		
 //		register(String.class, Types.LONGVARCHAR, new StringTypeHandler()) ; 
-		register(Blob.class, Types.BLOB, new BlobTypeHandler()) ; 
+		
 		register(Array.class, Types.ARRAY, new ArrayTypeHandler()) ; 
 		register(byte[].class, Types.BINARY, new BytesTypeHandler()) ; 
 	}

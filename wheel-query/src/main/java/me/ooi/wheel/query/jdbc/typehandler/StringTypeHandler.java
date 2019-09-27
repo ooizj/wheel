@@ -19,7 +19,7 @@ public class StringTypeHandler implements TypeHandler<String> {
 	public String getColumnValue(ResultSet rs, int columnIndex) throws SQLException {
 		if( sqlType == Types.CHAR || sqlType == Types.VARCHAR ) {
 			return rs.getString(columnIndex) ; 
-		}else if( sqlType == Types.BINARY ) {
+		}else if( sqlType == Types.VARBINARY || sqlType == Types.LONGVARBINARY ) {
 			byte[] bytes = rs.getBytes(columnIndex) ;
 			return new String(bytes) ; 
 		}
