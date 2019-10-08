@@ -32,7 +32,8 @@ public class BasicRowHandler<T> implements RowHandler<T> {
 		ResultSetMetaData rsmd = rs.getMetaData() ; 
 		
 		//single column
-		if( rsmd.getColumnCount() == 1 && TypeHandlerRegistry.INSTANCE.isPrimitiveType(rowObjectType) ){
+		if( rsmd.getColumnCount() == 1 && (TypeHandlerRegistry.INSTANCE.isPrimitiveType(rowObjectType) || 
+				Enum.class.isAssignableFrom(rowObjectType)/*dynamic register type handler*/) ){
 			int sqlType = rsmd.getColumnType(1) ; 
 			TypeHandler<?> handler = TypeHandlerRegistry.INSTANCE.getTypeHandler(rowObjectType, sqlType) ; 
 			return (T) handler.getColumnValue(rs, 1) ; 

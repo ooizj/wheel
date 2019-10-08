@@ -18,6 +18,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import lombok.Data;
 import me.ooi.wheel.query.jdbc.ConnectionHolder;
 import me.ooi.wheel.query.jdbc.JDBCQuery;
 
@@ -500,9 +501,6 @@ public class TypeHandlerTest {
 		List<byte[]> list1 = query.select("select testBinary from mysqlalltype ", byte[].class) ; 
 		printBytes(list1.get(0));
 		System.out.println(new String(list1.get(0)));
-		
-		List<String> list2 = query.select("select testBinary from mysqlalltype ", String.class) ; 
-		System.out.println("String\t"+list2);
 	}
 	
 	@Test
@@ -572,6 +570,177 @@ public class TypeHandlerTest {
 		list2.get(0).free();
 	}
 	
+	@Test
+	public void testTinyText1() throws SQLException, IOException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testTinyText = ? where id = 1", "123方法2") ; 
+		System.out.println(updatedRowCount);
+		
+		List<String> list3 = query.select("select testTinyText from mysqlalltype ", String.class) ; 
+		System.out.println("String\t"+list3);
+		
+		List<Blob> list2 = query.select("select testTinyText from mysqlalltype ", Blob.class) ; 
+		System.out.println("Blob\t"+list2);
+		InputStream is = list2.get(0).getBinaryStream() ; 
+		System.out.println(IOUtils.toString(is, "utf-8"));
+		if( is != null ){
+			is.close();
+		}
+		list2.get(0).free();
+	}
+	
+	@Test
+	public void testText1() throws SQLException, IOException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testText_ = ? where id = 1", "123方法2") ; 
+		System.out.println(updatedRowCount);
+		
+		List<String> list3 = query.select("select testText_ from mysqlalltype ", String.class) ; 
+		System.out.println("String\t"+list3);
+		
+		List<Blob> list2 = query.select("select testText_ from mysqlalltype ", Blob.class) ; 
+		System.out.println("Blob\t"+list2);
+		InputStream is = list2.get(0).getBinaryStream() ; 
+		System.out.println(IOUtils.toString(is, "utf-8"));
+		if( is != null ){
+			is.close();
+		}
+		list2.get(0).free();
+	}
+	
+	@Test
+	public void testMediumText1() throws SQLException, IOException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testMediumText = ? where id = 1", "123方法2") ; 
+		System.out.println(updatedRowCount);
+		
+		List<String> list3 = query.select("select testMediumText from mysqlalltype ", String.class) ; 
+		System.out.println("String\t"+list3);
+		
+		List<Blob> list2 = query.select("select testMediumText from mysqlalltype ", Blob.class) ; 
+		System.out.println("Blob\t"+list2);
+		InputStream is = list2.get(0).getBinaryStream() ; 
+		System.out.println(IOUtils.toString(is, "utf-8"));
+		if( is != null ){
+			is.close();
+		}
+		list2.get(0).free();
+	}
+	
+	@Test
+	public void testLongText1() throws SQLException, IOException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testLongText = ? where id = 1", "123方法2") ; 
+		System.out.println(updatedRowCount);
+		
+		List<String> list3 = query.select("select testLongText from mysqlalltype ", String.class) ; 
+		System.out.println("String\t"+list3);
+		
+		List<Blob> list2 = query.select("select testLongText from mysqlalltype ", Blob.class) ; 
+		System.out.println("Blob\t"+list2);
+		InputStream is = list2.get(0).getBinaryStream() ; 
+		System.out.println(IOUtils.toString(is, "utf-8"));
+		if( is != null ){
+			is.close();
+		}
+		list2.get(0).free();
+	}
+	
+	public static enum EnumAB{
+		A, B
+	}
+	
+	@Data
+	public static class EnumFieldClass{
+		private EnumAB ab ; 
+	}
+	
+	@Test
+	public void testEnum1() throws SQLException, IOException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testEnum_ = ? where id = 1", "A") ; 
+		System.out.println(updatedRowCount);
+		
+		List<EnumAB> list4 = query.select("select testEnum_ from mysqlalltype ", EnumAB.class) ; 
+		System.out.println("Enum\t"+list4);
+		
+		List<String> list3 = query.select("select testEnum_ from mysqlalltype ", String.class) ; 
+		System.out.println("String\t"+list3);
+	}
+	
+	@Test
+	public void testEnum2() throws SQLException, IOException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testEnum_ = ? where id = 1", "A") ; 
+		System.out.println(updatedRowCount);
+		
+		List<String> list3 = query.select("select testEnum_ from mysqlalltype ", String.class) ; 
+		System.out.println("String\t"+list3);
+
+		List<EnumFieldClass> list5 = query.select("select testEnum_ ab from mysqlalltype ", EnumFieldClass.class) ; 
+		System.out.println("Enum\t"+list5);
+		
+		List<EnumFieldClass> list6 = query.select("select testEnum_ ab from mysqlalltype ", EnumFieldClass.class) ; 
+		System.out.println("Enum\t"+list6);
+	}
+	
+	@Test
+	public void testSet1() throws SQLException, IOException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testSet_ = ? where id = 1", "B") ; 
+		System.out.println(updatedRowCount);
+		
+		List<EnumAB> list4 = query.select("select testSet_ from mysqlalltype ", EnumAB.class) ; 
+		System.out.println("Enum\t"+list4);
+		
+		List<String> list3 = query.select("select testSet_ from mysqlalltype ", String.class) ; 
+		System.out.println("String\t"+list3);
+	}
+	
+	@Test
+	public void testSet2() throws SQLException, IOException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testSet_ = ? where id = 1", "B") ; 
+		System.out.println(updatedRowCount);
+		
+		List<String> list3 = query.select("select testSet_ from mysqlalltype ", String.class) ; 
+		System.out.println("String\t"+list3);
+
+		List<EnumFieldClass> list5 = query.select("select testSet_ ab from mysqlalltype ", EnumFieldClass.class) ; 
+		System.out.println("Enum\t"+list5);
+	}
 	
 	private void printBytes(byte[] bytes){
 		if( bytes == null ){
