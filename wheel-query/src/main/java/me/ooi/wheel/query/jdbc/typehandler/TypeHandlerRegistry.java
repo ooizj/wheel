@@ -3,7 +3,9 @@ package me.ooi.wheel.query.jdbc.typehandler;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.Array;
 import java.sql.Blob;
+import java.sql.Clob;
 import java.sql.Types;
 import java.util.HashMap;
 import java.util.Map;
@@ -95,12 +97,6 @@ public class TypeHandlerRegistry {
 		//BOOL, BOOLEAN
 		//These types are synonyms for TINYINT(1). A value of zero is considered false. Nonzero values are considered true.
 		register(Boolean.class, Types.BOOLEAN, new BooleanTypeHandler()) ; 
-		
-		
-		
-		
-		
-		
 	}
 	
 	private void registerDate(){
@@ -136,6 +132,17 @@ public class TypeHandlerRegistry {
 		//A variable-length string. M represents the maximum column length in characters. The range of M is 0 to 65,535. The effective maximum length of a VARCHAR is subject to the maximum row size (65,535 bytes, which is shared among all columns) and the character set used. For example, utf8 characters can require up to three bytes per character, so a VARCHAR column that uses the utf8 character set can be declared to be a maximum of 21,844 characters. 
 		register(String.class, Types.VARCHAR, new StringTypeHandler(Types.VARCHAR)) ; 
 		
+		//TEXT[(M)] [CHARACTER SET charset_name] [COLLATE collation_name]
+		//A TEXT column with a maximum length of 65,535 (216 − 1) characters. The effective maximum length is less if the value contains multibyte characters. Each TEXT value is stored using a 2-byte length prefix that indicates the number of bytes in the value.
+		//TINYTEXT [CHARACTER SET charset_name] [COLLATE collation_name]
+		//A TEXT column with a maximum length of 255 (28 − 1) characters. The effective maximum length is less if the value contains multibyte characters. Each TINYTEXT value is stored using a 1-byte length prefix that indicates the number of bytes in the value.
+		//MEDIUMTEXT [CHARACTER SET charset_name] [COLLATE collation_name]
+		//A TEXT column with a maximum length of 16,777,215 (224 − 1) characters. The effective maximum length is less if the value contains multibyte characters. Each MEDIUMTEXT value is stored using a 3-byte length prefix that indicates the number of bytes in the value.
+		//LONGTEXT [CHARACTER SET charset_name] [COLLATE collation_name]
+		//A TEXT column with a maximum length of 4,294,967,295 or 4GB (232 − 1) characters. The effective maximum length is less if the value contains multibyte characters. The effective maximum length of LONGTEXT columns also depends on the configured maximum packet size in the client/server protocol and available memory. Each LONGTEXT value is stored using a 4-byte length prefix that indicates the number of bytes in the value.
+		register(String.class, Types.LONGVARCHAR, new StringTypeHandler(Types.LONGVARCHAR)) ; 
+		register(Blob.class, Types.LONGVARCHAR, new BlobTypeHandler()) ; 
+		
 		//BINARY[(M)]
 		//The BINARY type is similar to the CHAR type, but stores binary byte strings rather than nonbinary character strings. An optional length M represents the column length in bytes. If omitted, M defaults to 1.
 		register(byte[].class, Types.BINARY, new BytesTypeHandler()) ; 
@@ -148,17 +155,6 @@ public class TypeHandlerRegistry {
 		register(byte[].class, Types.LONGVARBINARY, new BytesTypeHandler()) ; 
 		register(String.class, Types.LONGVARBINARY, new StringTypeHandler(Types.LONGVARBINARY)) ; 
 		register(Blob.class, Types.LONGVARBINARY, new BlobTypeHandler()) ; 
-		
-		//TEXT[(M)] [CHARACTER SET charset_name] [COLLATE collation_name]
-		//A TEXT column with a maximum length of 65,535 (216 − 1) characters. The effective maximum length is less if the value contains multibyte characters. Each TEXT value is stored using a 2-byte length prefix that indicates the number of bytes in the value.
-		//TINYTEXT [CHARACTER SET charset_name] [COLLATE collation_name]
-		//A TEXT column with a maximum length of 255 (28 − 1) characters. The effective maximum length is less if the value contains multibyte characters. Each TINYTEXT value is stored using a 1-byte length prefix that indicates the number of bytes in the value.
-		//MEDIUMTEXT [CHARACTER SET charset_name] [COLLATE collation_name]
-		//A TEXT column with a maximum length of 16,777,215 (224 − 1) characters. The effective maximum length is less if the value contains multibyte characters. Each MEDIUMTEXT value is stored using a 3-byte length prefix that indicates the number of bytes in the value.
-		//LONGTEXT [CHARACTER SET charset_name] [COLLATE collation_name]
-		//A TEXT column with a maximum length of 4,294,967,295 or 4GB (232 − 1) characters. The effective maximum length is less if the value contains multibyte characters. The effective maximum length of LONGTEXT columns also depends on the configured maximum packet size in the client/server protocol and available memory. Each LONGTEXT value is stored using a 4-byte length prefix that indicates the number of bytes in the value.
-		register(String.class, Types.LONGVARCHAR, new StringTypeHandler(Types.LONGVARCHAR)) ; 
-		register(Blob.class, Types.LONGVARCHAR, new BlobTypeHandler()) ; 
 		
 		//TINYBLOB
 		//A BLOB column with a maximum length of 255 (28 − 1) bytes. Each TINYBLOB value is stored using a 1-byte length prefix that indicates the number of bytes in the value.
@@ -180,10 +176,12 @@ public class TypeHandlerRegistry {
 		//A set. A string object that can have zero or more values, each of which must be chosen from the list of values 'value1', 'value2', ... SET values are represented internally as integers.
 		//A SET column can have a maximum of 64 distinct members. A table can have no more than 255 unique element list definitions among its ENUM and SET columns considered as a group. For more information on this limit, see Limits Imposed by .frm File Structure.
 		
-//		register(String.class, Types.LONGVARCHAR, new StringTypeHandler()) ; 
 		
-//		register(Array.class, Types.ARRAY, new ArrayTypeHandler()) ; 
-//		register(byte[].class, Types.BINARY, new BytesTypeHandler()) ; 
+		//have not test
+		register(Array.class, Types.ARRAY, new ArrayTypeHandler()) ; 
+		register(Clob.class, Types.CLOB, new ClobTypeHandler()) ;
+		
+		//have not declared type : NULL/OTHER/JAVA_OBJECT/DISTINCT/STRUCT/REF/DATALINK/ROWID/NCHAR/NVARCHAR/LONGNVARCHAR/NCLOB/SQLXML/REF_CURSOR/TIME_WITH_TIMEZONE/TIMESTAMP_WITH_TIMEZONE
 	}
 	
 	public boolean isPrimitiveType(Type type){

@@ -18,7 +18,8 @@ public class ShortTypeHandler implements TypeHandler<Short> {
 	@Override
 	public Short getColumnValue(ResultSet rs, int columnIndex) throws SQLException {
 		if( sqlType == Types.SMALLINT ){
-			return rs.getShort(columnIndex) ;
+			Short val = rs.getShort(columnIndex) ;
+			return rs.wasNull() ? null : val ; 
 		}else if( sqlType == Types.TINYINT ){
 			Byte val = rs.getByte(columnIndex) ; 
 			return val == null ? null : val.shortValue() ; 

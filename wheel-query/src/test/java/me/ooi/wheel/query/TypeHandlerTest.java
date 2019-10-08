@@ -118,7 +118,8 @@ public class TypeHandlerTest {
 		
 //		int updatedRowCount = query.update("alter table mysqlalltype add column(`UNSIGNED_testSmallInt_` smallint(11) UNSIGNED )") ;
 //		int updatedRowCount = query.update("alter table mysqlalltype add column(testBit2_ bit(1) DEFAULT NULL)") ;
-		int updatedRowCount = query.update("alter table mysqlalltype add column(testNUMERIC2_ NUMERIC)") ;
+//		int updatedRowCount = query.update("alter table mysqlalltype add column(testNUMERIC2_ NUMERIC)") ;
+		int updatedRowCount = query.update("alter table mysqlalltype add column(testArray array)") ;
 		
 		System.out.println(updatedRowCount);
 	}
@@ -740,6 +741,87 @@ public class TypeHandlerTest {
 
 		List<EnumFieldClass> list5 = query.select("select testSet_ ab from mysqlalltype ", EnumFieldClass.class) ; 
 		System.out.println("Enum\t"+list5);
+	}
+	
+	@Test
+	public void testSet3() throws SQLException, IOException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testSet_ = ? where id = 1", "A,B") ; 
+		System.out.println(updatedRowCount);
+		
+		List<String> list3 = query.select("select testSet_ from mysqlalltype ", String.class) ; 
+		System.out.println("String\t"+list3);
+
+		List<EnumFieldClass> list5 = query.select("select testSet_ ab from mysqlalltype ", EnumFieldClass.class) ; // throw exception
+		System.out.println("Enum\t"+list5);
+	}
+	
+	@Test
+	public void testNull1() throws SQLException, IOException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testSet_ = ? where id = 1", (Object)null) ; 
+		System.out.println(updatedRowCount);
+		
+		List<String> list3 = query.select("select testSet_ from mysqlalltype ", String.class) ; 
+		System.out.println("String\t"+list3);
+
+		List<EnumFieldClass> list5 = query.select("select testSet_ ab from mysqlalltype ", EnumFieldClass.class) ; 
+		System.out.println("Enum\t"+list5);
+	}
+	
+	@Test
+	public void testNull2() throws SQLException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testInt = ? where id = 1", (Object)null) ; 
+		System.out.println(updatedRowCount);
+		
+		List<Integer> list2 = query.select("select testInt from mysqlalltype ", Integer.class) ; 
+		System.out.println("Integer\t"+list2);
+		List<Integer> list1 = query.select("select testInt from mysqlalltype ", int.class) ; 
+		System.out.println("int\t"+list1);
+		
+		List<Long> list3 = query.select("select testInt from mysqlalltype ", Long.class) ; 
+		System.out.println("Long\t"+list3);
+		List<Long> list4 = query.select("select testInt from mysqlalltype ", long.class) ; 
+		System.out.println("long\t"+list4);
+		
+		List<BigDecimal> list5 = query.select("select testInt from mysqlalltype ", BigDecimal.class) ; 
+		System.out.println("BigDecimal\t"+list5);
+		
+		List<BigInteger> list6 = query.select("select testInt from mysqlalltype ", BigInteger.class) ; 
+		System.out.println("BigInteger\t"+list6);
+	}
+	
+	@Data
+	public static class IntFieldTestClass{
+		private int a ; 
+		private Integer b ; 
+	}
+	
+	@Test
+	public void testNull3() throws SQLException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testInt = ? where id = 1", (Object)null) ; 
+		System.out.println(updatedRowCount);
+		
+		List<IntFieldTestClass> list2 = query.select("select testInt a, testInt b from mysqlalltype ", IntFieldTestClass.class) ; 
+		System.out.println("IntFieldTestClass\t"+list2);
 	}
 	
 	private void printBytes(byte[] bytes){

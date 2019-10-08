@@ -18,7 +18,8 @@ public class IntegerTypeHandler implements TypeHandler<Integer> {
 	@Override
 	public Integer getColumnValue(ResultSet rs, int columnIndex) throws SQLException {
 		if( sqlType == Types.INTEGER ){
-			return rs.getInt(columnIndex) ; 
+			Integer val = rs.getInt(columnIndex) ;
+			return rs.wasNull() ? null : val ; 
 		}else if( sqlType == Types.SMALLINT ){
 			Short val = rs.getShort(columnIndex) ; 
 			return val == null ? null : val.intValue() ; 

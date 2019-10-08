@@ -11,7 +11,8 @@ public class ByteTypeHandler implements TypeHandler<Byte> {
 
 	@Override
 	public Byte getColumnValue(ResultSet rs, int columnIndex) throws SQLException {
-		return rs.getByte(columnIndex) ; 
+		Byte val = rs.getByte(columnIndex) ;
+		return rs.wasNull() ? null : val ; 
 	}
 
 }
