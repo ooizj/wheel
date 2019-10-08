@@ -18,7 +18,8 @@ public class DoubleTypeHandler implements TypeHandler<Double> {
 	@Override
 	public Double getColumnValue(ResultSet rs, int columnIndex) throws SQLException {
 		if( sqlType == Types.DOUBLE ){
-			return rs.getDouble(columnIndex) ;
+			Double val = rs.getDouble(columnIndex) ;
+			return rs.wasNull() ? null : val ; 
 		}
 		
 		return null ; 

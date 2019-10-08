@@ -11,7 +11,8 @@ public class BooleanTypeHandler implements TypeHandler<Boolean> {
 
 	@Override
 	public Boolean getColumnValue(ResultSet rs, int columnIndex) throws SQLException {
-		return rs.getBoolean(columnIndex) ; 
+		Boolean val = rs.getBoolean(columnIndex) ; 
+		return rs.wasNull() ? null : val ; 
 	}
 
 }

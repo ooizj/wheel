@@ -11,7 +11,8 @@ public class FloatTypeHandler implements TypeHandler<Float> {
 
 	@Override
 	public Float getColumnValue(ResultSet rs, int columnIndex) throws SQLException {
-		return rs.getFloat(columnIndex) ;
+		Float val = rs.getFloat(columnIndex) ;
+		return rs.wasNull() ? null : val ; 
 	}
 
 }

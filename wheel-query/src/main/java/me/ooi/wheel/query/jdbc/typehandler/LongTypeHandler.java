@@ -18,16 +18,17 @@ public class LongTypeHandler implements TypeHandler<Long> {
 	@Override
 	public Long getColumnValue(ResultSet rs, int columnIndex) throws SQLException {
 		if( sqlType == Types.BIGINT ){
-			return rs.getLong(columnIndex) ;
+			Long val = rs.getLong(columnIndex) ;
+			return rs.wasNull() ? null : val ; 
 		}else if( sqlType == Types.INTEGER ){
 			Integer val = rs.getInt(columnIndex) ; 
-			return val == null ? null : val.longValue() ; 
+			return (val == null || rs.wasNull()) ? null : val.longValue() ; 
 		}else if( sqlType == Types.SMALLINT ){
 			Short val = rs.getShort(columnIndex) ; 
-			return val == null ? null : val.longValue(); 
+			return (val == null || rs.wasNull()) ? null : val.longValue(); 
 		}else if( sqlType == Types.TINYINT ){
 			Byte val = rs.getByte(columnIndex) ; 
-			return val == null ? null : val.longValue() ; 
+			return (val == null || rs.wasNull()) ? null : val.longValue() ; 
 		}
 		
 		return null ; 

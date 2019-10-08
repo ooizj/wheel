@@ -22,16 +22,16 @@ public class BigDecimalTypeHandler implements TypeHandler<BigDecimal> {
 			return rs.getBigDecimal(columnIndex) ;
 		}else if( sqlType == Types.INTEGER ){
 			Integer val = rs.getInt(columnIndex) ; 
-			return val == null ? null : new BigDecimal(val) ; 
+			return (val == null || rs.wasNull()) ? null : new BigDecimal(val) ; 
 		}else if( sqlType == Types.SMALLINT ){
 			Short val = rs.getShort(columnIndex) ; 
-			return val == null ? null : new BigDecimal(val.intValue()) ;  
+			return (val == null || rs.wasNull()) ? null : new BigDecimal(val.intValue()) ;  
 		}else if( sqlType == Types.BIGINT ){
 			Long val = rs.getLong(columnIndex) ;
-			return val == null ? null : new BigDecimal(val) ;  
+			return (val == null || rs.wasNull()) ? null : new BigDecimal(val) ;  
 		}else if( sqlType == Types.TINYINT ){
 			Byte val = rs.getByte(columnIndex) ; 
-			return val == null ? null : new BigDecimal(val) ; 
+			return (val == null || rs.wasNull()) ? null : new BigDecimal(val) ; 
 		}
 		
 		return null ; 

@@ -257,6 +257,43 @@ public class TypeHandlerTest {
 	}
 	
 	@Test
+	public void testTinyInt3() throws SQLException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testTinyInt_ = ? where id = 1", (Integer)null) ; 
+		System.out.println(updatedRowCount);
+		
+		List<Byte> list9 = query.select("select testTinyInt_ from mysqlalltype ", Byte.class) ; 
+		System.out.println("Byte\t"+list9);
+		List<Byte> list10 = query.select("select testTinyInt_ from mysqlalltype ", byte.class) ; 
+		System.out.println("byte\t"+list10);
+		
+		List<Short> list7 = query.select("select testTinyInt_ from mysqlalltype ", Short.class) ; 
+		System.out.println("Short\t"+list7);
+		List<Short> list8 = query.select("select testTinyInt_ from mysqlalltype ", short.class) ; 
+		System.out.println("short\t"+list8);
+		
+		List<Integer> list2 = query.select("select testTinyInt_ from mysqlalltype ", Integer.class) ; 
+		System.out.println("Integer\t"+list2);
+		List<Integer> list1 = query.select("select testTinyInt_ from mysqlalltype ", int.class) ; 
+		System.out.println("int\t"+list1);
+		
+		List<Long> list3 = query.select("select testTinyInt_ from mysqlalltype ", Long.class) ; 
+		System.out.println("Long\t"+list3);
+		List<Long> list4 = query.select("select testTinyInt_ from mysqlalltype ", long.class) ; 
+		System.out.println("long\t"+list4);
+		
+		List<BigDecimal> list5 = query.select("select testTinyInt_ from mysqlalltype ", BigDecimal.class) ; 
+		System.out.println("BigDecimal\t"+list5);
+		
+		List<BigInteger> list6 = query.select("select testTinyInt_ from mysqlalltype ", BigInteger.class) ; 
+		System.out.println("BigInteger\t"+list6);
+	}
+	
+	@Test
 	public void testTinyInt2() throws SQLException{
 		JDBCQuery query = new JDBCQuery() ;
 		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
@@ -302,6 +339,21 @@ public class TypeHandlerTest {
 	}
 	
 	@Test
+	public void testBit3() throws SQLException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testBit_ = ? where id = 1", (Integer)null) ; 
+		System.out.println(updatedRowCount);
+		
+		List<Boolean> list11 = query.select("select testBit_ from mysqlalltype ", Boolean.class) ; 
+		System.out.println("Boolean\t"+list11.get(0));
+		
+	}
+	
+	@Test
 	public void testBigDecimal1() throws SQLException{
 		JDBCQuery query = new JDBCQuery() ;
 		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
@@ -309,6 +361,21 @@ public class TypeHandlerTest {
 		connectionHolder.setConnection(conn); 
 		
 		int updatedRowCount = query.update("update mysqlalltype set testDecimal = ? where id = 1", new BigDecimal(15.2)) ; 
+		System.out.println(updatedRowCount);
+		
+		List<BigDecimal> list1 = query.select("select testDecimal from mysqlalltype ", BigDecimal.class) ; 
+		System.out.println("BigDecimal\t"+list1);
+		
+	}
+	
+	@Test
+	public void testBigDecimal2() throws SQLException{
+		JDBCQuery query = new JDBCQuery() ;
+		ConnectionHolder connectionHolder = new ConnectionHolder() ; 
+		query.setConnectionHolder(connectionHolder);
+		connectionHolder.setConnection(conn); 
+		
+		int updatedRowCount = query.update("update mysqlalltype set testDecimal = ? where id = 1", (BigDecimal)null) ; 
 		System.out.println(updatedRowCount);
 		
 		List<BigDecimal> list1 = query.select("select testDecimal from mysqlalltype ", BigDecimal.class) ; 
@@ -836,15 +903,15 @@ public class TypeHandlerTest {
 		}
 	}
 	
-	private Date getDate(String dateStr){
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss") ;
-		try {
-			return sdf.parse(dateStr) ;
-		} catch (ParseException e) {
-			e.printStackTrace();
-			return null ; 
-		} 
-	}
+//	private Date getDate(String dateStr){
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss") ;
+//		try {
+//			return sdf.parse(dateStr) ;
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//			return null ; 
+//		} 
+//	}
 	
 	private Date getTestErrorDate(){
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss") ;

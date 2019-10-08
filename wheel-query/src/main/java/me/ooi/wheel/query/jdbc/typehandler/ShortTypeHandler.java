@@ -22,7 +22,7 @@ public class ShortTypeHandler implements TypeHandler<Short> {
 			return rs.wasNull() ? null : val ; 
 		}else if( sqlType == Types.TINYINT ){
 			Byte val = rs.getByte(columnIndex) ; 
-			return val == null ? null : val.shortValue() ; 
+			return (val == null || rs.wasNull()) ? null : val.shortValue() ; 
 		}
 		
 		return null ; 
