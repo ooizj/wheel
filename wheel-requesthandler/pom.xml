@@ -47,21 +47,21 @@
 		<dependency>
 		    <groupId>org.apache.tomcat.embed</groupId>
 		    <artifactId>tomcat-embed-core</artifactId>
-		    <version>7.0.96</version>
+		    <version>7.0.99</version>
 		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-logging-juli -->
 		<dependency>
 		    <groupId>org.apache.tomcat.embed</groupId>
 		    <artifactId>tomcat-embed-logging-juli</artifactId>
-		    <version>7.0.96</version>
+		    <version>7.0.99</version>
 		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-jasper -->
 		<dependency>
 		    <groupId>org.apache.tomcat.embed</groupId>
 		    <artifactId>tomcat-embed-jasper</artifactId>
-		    <version>7.0.96</version>
+		    <version>7.0.99</version>
 		</dependency>
 		
 	</dependencies>  
